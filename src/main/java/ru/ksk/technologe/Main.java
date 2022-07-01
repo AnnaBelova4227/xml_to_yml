@@ -47,7 +47,8 @@ public class Main {
         try {
             jsonNodeTree = new ObjectMapper().readTree(xmlJSONObj.toString());
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.warning("ошибка при конвертации из JSONObject в jsonNode");
+            System.exit(-1);
         }
 
         JsonNode jsonNode = jsonNodeTree.get("fsa:ResponseFsaType")
@@ -62,7 +63,7 @@ public class Main {
         try {
             jsonAsYaml = new YAMLMapper().writeValueAsString(jsonNodeTree);
         } catch (JsonProcessingException e) {
-            log.warning("ошибка при создании выходного файлв");
+            log.warning("ошибка при конвертации из jsonNode в yaml");
             System.exit(-1);
         }
 
@@ -78,5 +79,7 @@ public class Main {
             log.warning("ошибка при закрытии выходного файла");
             System.exit(-1);
         }
+
+        log.info("END");
     }
 }
